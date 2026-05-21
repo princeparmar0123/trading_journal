@@ -1,0 +1,182 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-profit: var(--profit);
+  --color-loss: var(--loss);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-display: "Inter", "SF Pro Display", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+}
+
+/* Dark trading theme is the default */
+:root {
+  --radius: 1rem;
+
+  /* Core palette — TradingView inspired slate */
+  --background: oklch(0.21 0.034 264);            /* #0f172a */
+  --foreground: oklch(0.93 0.012 250);            /* #e2e8f0 */
+  --surface: oklch(0.25 0.031 264);
+  --card: oklch(0.29 0.030 256);                  /* #1e293b */
+  --card-foreground: oklch(0.93 0.012 250);
+  --popover: oklch(0.27 0.030 258);
+  --popover-foreground: oklch(0.93 0.012 250);
+
+  --primary: oklch(0.66 0.18 255);                /* #3b82f6 accent blue */
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.32 0.028 256);
+  --secondary-foreground: oklch(0.93 0.012 250);
+  --muted: oklch(0.30 0.028 256);
+  --muted-foreground: oklch(0.71 0.025 256);      /* #94a3b8 */
+  --accent: oklch(0.36 0.045 258);
+  --accent-foreground: oklch(0.97 0.005 250);
+  --destructive: oklch(0.64 0.225 27);            /* #ef4444 */
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.38 0.027 258 / 60%);          /* #334155 */
+  --input: oklch(0.34 0.028 258 / 70%);
+  --ring: oklch(0.66 0.18 255 / 60%);
+
+  --profit: oklch(0.71 0.18 145);                 /* #22c55e */
+  --loss: oklch(0.64 0.225 27);                   /* #ef4444 */
+
+  --chart-1: oklch(0.66 0.18 255);
+  --chart-2: oklch(0.71 0.18 145);
+  --chart-3: oklch(0.64 0.225 27);
+  --chart-4: oklch(0.78 0.15 80);
+  --chart-5: oklch(0.62 0.20 305);
+
+  --sidebar: oklch(0.23 0.030 264);               /* #111827 */
+  --sidebar-foreground: oklch(0.86 0.013 250);
+  --sidebar-primary: oklch(0.66 0.18 255);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.30 0.028 256);
+  --sidebar-accent-foreground: oklch(0.97 0.005 250);
+  --sidebar-border: oklch(0.34 0.027 258 / 60%);
+  --sidebar-ring: oklch(0.66 0.18 255 / 60%);
+}
+
+/* Optional light mode (kept for the toggle bonus feature) */
+.light {
+  --background: oklch(0.99 0.003 250);
+  --foreground: oklch(0.22 0.030 264);
+  --surface: oklch(0.97 0.005 250);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.030 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.030 264);
+  --primary: oklch(0.55 0.20 258);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.95 0.010 250);
+  --secondary-foreground: oklch(0.22 0.030 264);
+  --muted: oklch(0.95 0.010 250);
+  --muted-foreground: oklch(0.50 0.025 256);
+  --accent: oklch(0.94 0.015 256);
+  --accent-foreground: oklch(0.22 0.030 264);
+  --destructive: oklch(0.58 0.225 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.88 0.013 255);
+  --input: oklch(0.92 0.013 255);
+  --ring: oklch(0.55 0.20 258 / 50%);
+  --sidebar: oklch(0.97 0.005 250);
+  --sidebar-foreground: oklch(0.22 0.030 264);
+  --sidebar-border: oklch(0.88 0.013 255);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, oklch(0.66 0.18 255 / 0.08), transparent 60%),
+      radial-gradient(800px 400px at -10% 10%, oklch(0.62 0.20 305 / 0.06), transparent 60%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: color-mix(in oklab, var(--card) 70%, transparent);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  }
+  .glass-strong {
+    background: color-mix(in oklab, var(--card) 88%, transparent);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+  }
+  .text-profit { color: var(--profit); }
+  .text-loss { color: var(--loss); }
+  .bg-profit\/10 { background-color: color-mix(in oklab, var(--profit) 10%, transparent); }
+  .bg-loss\/10 { background-color: color-mix(in oklab, var(--loss) 10%, transparent); }
+  .shadow-soft {
+    box-shadow:
+      0 1px 0 0 color-mix(in oklab, white 4%, transparent) inset,
+      0 10px 30px -12px rgba(0, 0, 0, 0.45);
+  }
+  .shadow-glow {
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 30%, transparent),
+                0 8px 40px -8px color-mix(in oklab, var(--primary) 40%, transparent);
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--border) 40%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--border) 40%, transparent) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
