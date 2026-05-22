@@ -25,6 +25,7 @@ export async function uploadTradeImage(userId: string, file: File): Promise<stri
 
   const { url } = await uploadTradeImageServer({ data: form });
   return url;
+  
 }
 
 /** Delete chart image from Cloudinary when a trade is removed. */
