@@ -20,6 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -41,10 +44,14 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ vars.VITE_FIREBASE_APP_ID }}
           VITE_FIREBASE_MEASUREMENT_ID: ${{ vars.VITE_FIREBASE_MEASUREMENT_ID }}
 
+      - name: Verify build output
+        run: test -f dist/client/index.html
+
       - name: Prepare GitHub Pages entry files
         run: |
           cd dist/client
           cp index.html 404.html
+          touch .nojekyll
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

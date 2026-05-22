@@ -16,6 +16,9 @@ dist-ssr
 .nitro
 *.local
 
+# Secrets — never commit
+.env
+.env.*
 !.env.example
 
 # Wrangler / Cloudflare

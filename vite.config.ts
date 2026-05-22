@@ -15,12 +15,14 @@ export default defineConfig({
   cloudflare: isGitHubPagesBuild ? false : undefined,
   tanstackStart: {
     server: { entry: "server" },
-    spa: {
-      enabled: true,
-      prerender: {
-        outputPath: "/index.html",
-      },
-    },
+    spa: isGitHubPagesBuild
+      ? {
+          enabled: true,
+          prerender: {
+            outputPath: "/index.html",
+          },
+        }
+      : undefined,
   },
   vite: {
     base: isGitHubPagesBuild ? "/trading_journal/" : "/",
