@@ -1,11 +1,13 @@
 {
   "name": "tanstack_start_ts",
   "private": true,
+  "homepage": "https://princeparmar0123.github.io/trading_journal",
   "sideEffects": false,
   "type": "module",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "build:pages": "GITHUB_PAGES=1 vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",

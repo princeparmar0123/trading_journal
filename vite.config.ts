@@ -8,8 +8,21 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
+// GitHub Pages is static-only — disable Cloudflare worker bundling so SPA prerender can run.
+const isGitHubPagesBuild = process.env.GITHUB_PAGES === "1";
+
 export default defineConfig({
+  cloudflare: isGitHubPagesBuild ? false : undefined,
   tanstackStart: {
     server: { entry: "server" },
+    spa: {
+      enabled: true,
+      prerender: {
+        outputPath: "/index.html",
+      },
+    },
+  },
+  vite: {
+    base: isGitHubPagesBuild ? "/trading_journal/" : "/",
   },
 });
