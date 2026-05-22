@@ -18,7 +18,7 @@ export function ScreenshotModal({ url, onClose }: { url: string; onClose: () => 
         src={url}
         alt="Trade screenshot"
         onClick={(e) => e.stopPropagation()}
-        className="max-h-[90vh] max-w-[95vw] rounded-2xl border border-border shadow-2xl"
+        className="max-h-[90vh] max-w-[95vw] object-contain rounded-2xl border border-border shadow-2xl"
       />
     </div>
   );

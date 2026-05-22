@@ -158,12 +158,12 @@ function TradeDetailPage() {
           <button
             type="button"
             onClick={() => screenshot.open(trade.screenshotUrl!)}
-            className="block w-full overflow-hidden rounded-xl border border-border/50 transition-transform hover:scale-[1.01]"
+            className="flex min-h-48 max-h-96 w-full items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-muted/15 transition-transform hover:scale-[1.01]"
           >
             <img
               src={trade.screenshotUrl}
               alt="Trade chart"
-              className="h-64 w-full object-cover"
+              className="max-h-96 w-full object-contain object-center"
             />
           </button>
         ) : (

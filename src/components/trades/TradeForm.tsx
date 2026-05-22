@@ -118,7 +118,8 @@ export function TradeForm({ existing }: { existing?: Trade }) {
     if (!user) return;
     if (!isCloudinaryConfigured) {
       toast.error("Cloudinary not configured", {
-        description: "Add CLOUDINARY_URL to .env and restart the dev server",
+        description:
+          "Set VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET (or API key + secret) in .env",
       });
       return;
     }
@@ -329,8 +330,12 @@ export function TradeForm({ existing }: { existing?: Trade }) {
       <section className={cardClass}>
         <SectionHeader icon={ImageIcon} title="Chart" subtitle="Upload a screenshot — stored on Cloudinary" />
         {screenshotUrl ? (
-          <div className="relative overflow-hidden rounded-xl border border-border/50">
-            <img src={screenshotUrl} alt="Trade chart" className="h-56 w-full object-cover" />
+          <div className="relative flex min-h-56 max-h-80 items-center justify-center overflow-hidden rounded-xl border border-border/50 bg-muted/15">
+            <img
+              src={screenshotUrl}
+              alt="Trade chart"
+              className="max-h-80 w-full object-contain object-center"
+            />
             <button
               type="button"
               onClick={() => {
