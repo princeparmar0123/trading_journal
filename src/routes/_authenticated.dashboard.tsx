@@ -37,6 +37,7 @@ import { EquityChart } from "@/components/dashboard/EquityChart";
 import { WinLossPie } from "@/components/dashboard/WinLossPie";
 import { MonthlyBar } from "@/components/dashboard/MonthlyBar";
 import { SessionBar } from "@/components/dashboard/SessionBar";
+import { PnlCalendar } from "@/components/dashboard/PnlCalendar";
 import { Skeleton } from "@/components/Skeleton";
 import { EmptyState } from "@/components/EmptyState";
 import { cn } from "@/lib/utils";
@@ -322,6 +323,14 @@ function DashboardPage() {
           tone="primary"
         />
       </div>
+
+      {/* P&L calendar */}
+      <ChartPanel
+        title="P&L calendar"
+        subtitle="Daily results with weekly totals in the right column"
+      >
+        <PnlCalendar trades={trades} />
+      </ChartPanel>
 
       {/* Equity */}
       <ChartPanel

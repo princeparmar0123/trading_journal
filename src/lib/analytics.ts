@@ -176,6 +176,96 @@ export function equityCurve(trades: Trade[]): { date: string; equity: number }[]
   });
 }
 
+export function dailyPnlMap(trades: Trade[]): Map<string, number> {
+  const map = new Map<string, number>();
+  for (const t of trades) {
+    const key = toDateKey(t.tradedAt);
+    map.set(key, (map.get(key) ?? 0) + t.pnl);
+  }
+  return map;
+}
+
+export function toDateKey(ts: number): string {
+  const d = new Date(ts);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+export interface CalendarDayCell {
+  date: Date;
+  dateKey: string;
+  inMonth: boolean;
+  pnl: number;
+  tradeCount: number;
+}
+
+export interface CalendarWeekRow {
+  days: CalendarDayCell[];
+  weekPnl: number;
+  weekLabel: string;
+}
+
+/** Build Sun–Sat week rows for a month with daily P&L and per-row week totals. */
+export function calendarMonthWeeks(
+  year: number,
+  month: number,
+  trades: Trade[],
+): CalendarWeekRow[] {
+  const countByDay = new Map<string, number>();
+  const pnlByDay = dailyPnlMap(trades);
+  for (const t of trades) {
+    const key = toDateKey(t.tradedAt);
+    countByDay.set(key, (countByDay.get(key) ?? 0) + 1);
+  }
+
+  const firstOfMonth = new Date(year, month, 1);
+  const lastOfMonth = new Date(year, month + 1, 0);
+
+  const gridStart = new Date(firstOfMonth);
+  gridStart.setDate(gridStart.getDate() - gridStart.getDay());
+
+  const gridEnd = new Date(lastOfMonth);
+  gridEnd.setDate(gridEnd.getDate() + (6 - gridEnd.getDay()));
+
+  const weeks: CalendarWeekRow[] = [];
+  const cursor = new Date(gridStart);
+
+  while (cursor <= gridEnd) {
+    const days: CalendarDayCell[] = [];
+    let weekPnl = 0;
+
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(cursor);
+      const dateKey = toDateKey(date.getTime());
+      const pnl = Math.round((pnlByDay.get(dateKey) ?? 0) * 100) / 100;
+      const inMonth = date.getMonth() === month && date.getFullYear() === year;
+      weekPnl += pnl;
+      days.push({
+        date,
+        dateKey,
+        inMonth,
+        pnl,
+        tradeCount: countByDay.get(dateKey) ?? 0,
+      });
+      cursor.setDate(cursor.getDate() + 1);
+    }
+
+    const weekStart = days[0].date;
+    const weekEnd = days[6].date;
+    const weekLabel = `${weekStart.toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${weekEnd.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+
+    weeks.push({
+      days,
+      weekPnl: Math.round(weekPnl * 100) / 100,
+      weekLabel,
+    });
+  }
+
+  return weeks;
+}
+
 export function monthlyPnl(trades: Trade[]): { month: string; pnl: number }[] {
   const map = new Map<string, number>();
   for (const t of trades) {
@@ -247,6 +337,13 @@ export function topPairs(trades: Trade[], limit = 5): PairStat[] {
 
 export function recentTrades(trades: Trade[], limit = 5): Trade[] {
   return [...trades].sort((a, b) => b.tradedAt - a.tradedAt).slice(0, limit);
+}
+
+/** Trades whose entry date matches YYYY-MM-DD (local calendar day). */
+export function tradesOnDate(trades: Trade[], dateKey: string): Trade[] {
+  return trades
+    .filter((t) => toDateKey(t.tradedAt) === dateKey)
+    .sort((a, b) => a.tradedAt - b.tradedAt);
 }
 
 export function formatProfitFactor(value: number): string {
